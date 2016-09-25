@@ -6,21 +6,36 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class SimpleTrelloTest {
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @Before
     public void setUp() throws Exception {
 
-        driver = new FirefoxDriver();
+        //initInternetExplorer();
+        initFireFox();
         driver.manage().timeouts().implicitlyWait(30L, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+    }
+
+    private void initFireFox(){
+        System.setProperty("webdriver.gecko.driver", "C:\\SeleniumCourses\\lib\\geckodriver.exe");
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability("marionette", false);
+        driver = new FirefoxDriver(capabilities);
+    }
+
+    private void initInternetExplorer() {
+        System.setProperty("webdriver.ie.driver","C:\\SeleniumCourses\\lib\\IEDriverServer32.exe");
+        driver = new InternetExplorerDriver();
     }
 
     @Test()
