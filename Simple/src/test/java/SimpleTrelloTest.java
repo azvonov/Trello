@@ -47,7 +47,6 @@ public class SimpleTrelloTest {
 
         driver.findElement(By.id("user")).sendKeys("testtesttest@mail.com");
         driver.findElement(By.id("password")).sendKeys("12345678");
-
         driver.findElement(By.id("login")).click();
 
         //BOARD
