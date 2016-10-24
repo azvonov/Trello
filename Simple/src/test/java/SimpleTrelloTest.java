@@ -29,6 +29,7 @@ public class SimpleTrelloTest {
     private void initFireFox(){
         System.setProperty("webdriver.gecko.driver", "C:\\SeleniumCourses\\lib\\geckodriver.exe");
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+       // capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
         capabilities.setCapability("marionette", false);
         driver = new FirefoxDriver(capabilities);
     }
@@ -49,9 +50,12 @@ public class SimpleTrelloTest {
 
         driver.findElement(By.id("login")).click();
 
+        //BOARD
         driver.findElement(By.xpath("//span[@title='Welcome Board' and @class='board-tile-details-name']"))
                 .click();
-        WebElement source = driver.findElement(By.xpath("//a[contains(text(),'Drop me')]"));
+        //SOURCE
+        WebElement source = driver.findElement(By.xpath("//a[contains(.,'Drop me')]/ancestor::div[@class='list-card-details']"));
+        //TARGET
         WebElement target = driver.findElement(By.xpath("//textarea[contains(text(),'Advanced')]"));
         Actions actions = new Actions(driver);
         actions.dragAndDrop(source, target).perform();
@@ -60,7 +64,7 @@ public class SimpleTrelloTest {
                 .findElement(By.xpath("//a[contains(text(),'Drop me')]/ancestor::div[@class='list js-list-content']//textarea"));
         Assert.assertEquals(expectedResult,targetElementColumn.getText());
 
-        source = driver.findElement(By.xpath("//a[contains(text(),'Drop me')]"));
+        source = driver.findElement(By.xpath("//a[contains(.,'Drop me')]/ancestor::div[@class='list-card-details']"));
         WebElement rollBack = driver.findElement(By.xpath("//textarea[contains(text(),'Basics')]"));
         actions.dragAndDrop(source, rollBack).perform();
     }
